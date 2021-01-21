@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<nav class="navbar navbar-dark bg-dark ml-auto">
+    <a class="navbar-brand ml-5 navbar-custom" href="/">Requests Trap - {{ request_id }}</a>
+</nav>
+{% endblock header %}
+
+{% block content %}
+    {% for i in data %}
+        <h4><span class="badge badge-dark font-weight-normal">{{ i.time }}</span></h4>
+        <h4><span class="badge badge-dark font-weight-normal">IP:</span> {{ i.ip }}</h4>
+        <h4><span class="badge badge-dark font-weight-normal">Method:</span> {{ i.method }}</h4>
+        <h4><span class="badge badge-dark font-weight-normal">Scheme:</span> {{ i.scheme }} </h4>
+        <h4><span class="badge badge-dark font-weight-normal">Body:</span></h4> <pre>{{ i.data }}</pre> 
+        {% if "query-string" in i.keys()%}
+            <h4><span class="badge badge-dark font-weight-normal">Query string</span></h4>
+            {% for k, v in i['query-string'].items() %}
+            <pre>{{ k }}: {{ v }}</pre>
+            {% endfor %}
+        {% endif %}
+        {% if "cookies" in i.keys()%}
+            <h4><span class="badge badge-dark font-weight-normal">Cookies:</span> {{ i.cookies }}</h4>
+        {% endif %}
+        <h4><span class="badge badge-dark font-weight-normal"> Headers </span></h4>
+        {% for k, v in i['headers'].items() %}
+        <pre>{{ k }}: {{ v }}</pre>
+        {% endfor %}
+        <hr>
+    {% endfor %}
+{% endblock content %}
