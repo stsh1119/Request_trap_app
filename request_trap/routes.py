@@ -23,4 +23,4 @@ def requests(request_id):
         return render_template('show_requests.html', request_id=request_id, data=result), 200
 
     else:
-        return f'No requests for {request_id}'
+        return render_template('404.html'), 404
